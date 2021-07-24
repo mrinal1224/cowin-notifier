@@ -6,25 +6,25 @@ const roomSchema = mongoose.Schema({
         required : true
     } ,
 
-    maxCount :{
+    maxcount :{
         type :Number,
         required : true
     },
 
-    phoneNumber :{
+    phonenumber :{
         type : Number,
         required :true
     },
 
-    rentPerDay :{
+    rentperday :{
         type : Number,
         required :true
     },
 
-    imagesUrl:[],
-    currentBookings:[],
+    imagesurl:[],
+    currentbookings:[],
 
-    roomType : {
+    type : {
         type:String,
         required :true
     },
