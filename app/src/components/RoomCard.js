@@ -31,20 +31,23 @@ function RoomCard({ room }) {
             </button>
           </div>
         </div>
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} size="lg">
           <Modal.Header>
             <Modal.Title>{room.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Carousel>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="holder.js/800x400?text=First slide&bg=373940"
-                  alt="First slide"
-                />
-              </Carousel.Item>
+            <Carousel prevLabel="" nextLabel="">
+              {room.imageurls.map((url) => {
+                return (
+                  <Carousel.Item>
+                    <img className="d-block w-100 big_img" src={url} />
+                  </Carousel.Item>
+                );
+              })}
             </Carousel>
+            <p>
+              <b>{room.description}</b>
+            </p>
           </Modal.Body>
 
           <Modal.Footer>
