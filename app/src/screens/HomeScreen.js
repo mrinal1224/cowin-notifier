@@ -5,8 +5,8 @@ import RoomCard from '../components/RoomCard'
 
 function HomeScreen() {
  const [rooms , setRooms] = useState([])
- const [loading , setLoading] = useState()
- const [error , setError] = useState()
+ const [loading , setLoading] = useState(false)
+ const [error , setError] = useState(false)
 
  useEffect(async()=>{
      try {

@@ -3,6 +3,8 @@ import './App.css';
 import Navbar from './components/Navbar';
 import {BrowserRouter , Link , Route} from "react-router-dom"
 import HomeScreen from './screens/HomeScreen';
+import BookingScreen from './screens/BookingScreen';
+
 
 function App() {
   return (
@@ -10,10 +12,10 @@ function App() {
       <Navbar />
 
       <BrowserRouter>
-       <Route path="/home" exact component={HomeScreen} />
-
+        <Route path="/home" exact component={HomeScreen} />
+        <Route path="/book/:roomid" component={BookingScreen} />
       </BrowserRouter>
-     </div>
+    </div>
   );
 }
 
