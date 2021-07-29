@@ -1,15 +1,16 @@
 import React , {useState , useEffect} from 'react'
+import axios from 'axios'
 
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginUser =()=>{
+  const loginUser =async()=>{
     const user={
         email,
         password
     }
-    console.log(user)
+    const result = await axios.post('/api/users/login',user).data
   }
     return (
       <>
@@ -36,7 +37,7 @@ function LoginScreen() {
               <i class="fas fa-key" aria-hidden="true"></i> Password
             </label>
             <input
-              type="text"
+              type="password"
               placeholder="Enter Your Password"
               value={password}
               onChange={(e) => {

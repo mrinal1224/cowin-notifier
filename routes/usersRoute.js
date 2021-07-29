@@ -14,12 +14,20 @@ router.post('/register' , async(req , res)=>{
 })
 
 router.post('/login' , async(req , res)=>{
-    const [email , password] = req.body
+    const {email , password} = req.body
 
     try {
       const userIn = await  User.findOne({email:email , password :password}) 
-      if(user){
-        res.send(userIn);
+      if(userIn){
+
+        const temp={
+          id: userIn._id,
+          name: userIn.name,
+          email : userIn.email,
+          isAdmin : userIn.isAdmin
+
+        }
+        res.send(temp);
       }
       else{
        return res.status(400).json({ 'message': 'Login Failed Please check your Password and Email' });
