@@ -28,11 +28,9 @@ function RoomCard({ room }) {
           </b>
           <div style={{ float: "right" }}>
             <Link to={`/book/${room._id}`}>
-              <button className="btn btn-success m-2">
-                 Book Now
-              </button>
+              <button className="btn btn-success m-2">Book Now</button>
             </Link>
-            <button className="btn btn-danger" onClick={handleShow}>
+            <button className="btn btn-outline-dark" onClick={handleShow}>
               View Details
             </button>
           </div>

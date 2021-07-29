@@ -1,11 +1,17 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
+import Success from '../components/Success'
+import Loader from '../components/Loader'
+import Error from '../components/Error'
 
 function RegisterScreen() {
-      const [name, setName] = useState("");
-      const [email, setEmail] = useState("");
-      const [password, setPassword] = useState("");
-      const [cpassword, setCpassword] = useState("");
+      const [name, setName] = useState('');
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
+      const [cpassword, setCpassword] = useState('');
+      const [loading, setLoading] = useState(false);
+      const[success , setSuccess] = useState()
+      const [error, setError] = useState();
       
 
       const regiterUser= async()=>{
@@ -17,9 +23,18 @@ function RegisterScreen() {
              cpassword,
            };
            try {
+             setLoading(true)
              const result = await axios.post('/api/users/register', user).data
+             setLoading(false)
+             setSuccess(true)
+             setName('')
+             setEmail('')
+             setPassword('')
+             setCpassword('')
            } catch (error) {
              console.log(error)
+             setLoading(false)
+             setError(true)
            }
            
          } else {
@@ -33,8 +48,12 @@ function RegisterScreen() {
 
     return (
       <>
+        {loading && <Loader />}
+        {error && <Error />}
+
         <div className="login">
           <div className="loginContainer">
+            {success && <Success message="Registration Successfull! Welcome to Quick Rooms🙏" />}
             <h1 className="heading">
               <i class="fas fa-hotel" aria-hidden="true"></i> Register with
               Quick Rooms <i class="fa fa-map-marker" aria-hidden="true"></i>
