@@ -44,8 +44,8 @@ function BookingScreen({match}) {
                   <div style={{ textAlign: "right" }}>
                     <b>
                       <p>Name :</p>
-                      <p>From Date:</p>
-                      <p>To Date:</p>
+                      <p>From Date:{match.params.fromDate}</p>
+                      <p>To Date:{match.params.toDate}</p>
                       <p>Maximum Guests : {room.maxcount}</p>
                     </b>
                   </div>
