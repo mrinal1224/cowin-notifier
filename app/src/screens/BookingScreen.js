@@ -4,7 +4,10 @@ import Loader from '../components/Loader';
 import Error from '../components/Error';
 import moment from 'moment'
 
+
+
 function BookingScreen({match}) {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
 
      const [room, setRoom] = useState({});
      const [loading, setLoading] = useState(true);
@@ -51,7 +54,7 @@ function BookingScreen({match}) {
                   <hr />
                   <div style={{ textAlign: "right" }}>
                     <b>
-                      <p>Name :</p>
+                      <p>Name :{user.name}</p>
                       <p>From Date:{match.params.fromDate}</p>
                       <p>To Date:{match.params.toDate}</p>
                       <p>Maximum Guests : {room.maxcount}</p>
