@@ -12,6 +12,7 @@ function BookingScreen({match}) {
      const [room, setRoom] = useState({});
      const [loading, setLoading] = useState(true);
      const [error, setError] = useState();
+     const [totalamount , setTotalamount]= useState()
 
 
      const roomid = match.params.roomid
@@ -20,12 +21,17 @@ function BookingScreen({match}) {
 
      const totalDays = moment.duration(toDate.diff(fromDate)).asDays()
 
+
+     
+
      useEffect(async () => {
        try {
          setLoading(true);
-         const roomData = (await axios.post('/api/rooms/getroombyid' , {roomid: match.params.roomid})).data;
+        const roomData = (await axios.post('/api/rooms/getroombyid' , {roomid: match.params.roomid})).data;
+        const totalAmount = totalDays * roomData.rentperday;
        
          setRoom(roomData);
+         setTotalamount(totalAmount)
         
       
          setLoading(false);
@@ -35,6 +41,23 @@ function BookingScreen({match}) {
          setError(false);
        }
      }, []);
+
+     const confirmRoom = async()=>{
+          const bookingDetails={
+            room ,
+            userid : JSON.parse(localStorage.getItem('currentUser'))._id,
+            fromDate,
+            toDate,
+            totalDays,
+            totalamount
+          }
+
+          try {
+            const result = await axios.post('/api/bookings/bookroom' , bookingDetails)
+          } catch (error) {
+            console.log(error)
+          }
+     }
 
     return (
       <>
@@ -67,12 +90,12 @@ function BookingScreen({match}) {
                       <hr />
                       <p>Total Days :{totalDays} </p>
                       <p>Rent Per Day : {room.rentperday}</p>
-                      <p>Total Amount : {totalDays * room.rentperday}</p>
+                      <p>Total Amount : {totalamount}</p>
                     </b>
                   </div>
 
                   <div style={{ float: "right" }}>
-                    <button className="btn btn-success">Confirm Booking</button>
+                    <button className="btn btn-success" onClick={confirmRoom}>Confirm Booking</button>
                   </div>
                 </div>
               </div>
