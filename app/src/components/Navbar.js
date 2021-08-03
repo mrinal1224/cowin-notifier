@@ -12,9 +12,9 @@ function Navbar() {
     return (
       <div>
         <nav className="navbar navbar-expand-sm">
-          <a className="navbar-brand" href="#/Home">
+          <nav className="navbar-brand">
             Quick Rooms
-          </a>
+          </nav>
           <button
             className="navbar-toggler"
             type="button"

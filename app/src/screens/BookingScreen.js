@@ -3,6 +3,7 @@ import axios from "axios"
 import Loader from '../components/Loader';
 import Error from '../components/Error';
 import moment from 'moment'
+import StripeCheckout from "react-stripe-checkout";
 
 
 
@@ -42,68 +43,83 @@ function BookingScreen({match}) {
        }
      }, []);
 
-     const confirmRoom = async()=>{
-          const bookingDetails={
-            room ,
-            userid : user.id,
-            fromDate,
-            toDate,
-            totalDays,
-            totalamount
-          }
+  
 
-          try {
-            const result = await axios.post('/api/bookings/bookroom' , bookingDetails)
-          } catch (error) {
-            console.log(error)
-          }
+     const onToken = async (token)=>{
+       
+
+       const bookingDetails = {
+         room,
+         userid: user.id,
+         fromDate,
+         toDate,
+         totalDays,
+         totalamount,
+       };
+
+       try {
+         const result = await axios.post(
+           "/api/bookings/bookroom",
+           bookingDetails
+         );
+       } catch (error) {
+         console.log(error);
+       }
      }
 
     return (
       <>
-        
-          {loading ? (
-            <h1><Loader /></h1>
-          ) : room ? (
-            <div className='m-5'>
-              <div className="row justify-content-center mt-5 bs">
-                <div className="col-md-6">
-                  <h1>{room.name}</h1>
-                  <img src={room.imageurls[0]} className='big_img'/>
+        {loading ? (
+          <h1>
+            <Loader />
+          </h1>
+        ) : room ? (
+          <div className="m-5">
+            <div className="row justify-content-center mt-5 bs">
+              <div className="col-md-6">
+                <h1>{room.name}</h1>
+                <img src={room.imageurls[0]} className="big_img" />
+              </div>
+
+              <div className="col-md-5">
+                <h1>Booking Details</h1>
+                <hr />
+                <div style={{ textAlign: "right" }}>
+                  <b>
+                    <p>Name :{user.name}</p>
+                    <p>From Date:{match.params.fromDate}</p>
+                    <p>To Date:{match.params.toDate}</p>
+                    <p>Maximum Guests : {room.maxcount}</p>
+                  </b>
                 </div>
 
-                <div className="col-md-5">
-                  <h1>Booking Details</h1>
-                  <hr />
-                  <div style={{ textAlign: "right" }}>
-                    <b>
-                      <p>Name :{user.name}</p>
-                      <p>From Date:{match.params.fromDate}</p>
-                      <p>To Date:{match.params.toDate}</p>
-                      <p>Maximum Guests : {room.maxcount}</p>
-                    </b>
-                  </div>
+                <div style={{ textAlign: "right" }}>
+                  <b>
+                    <h1>Amount</h1>
+                    <hr />
+                    <p>Total Days :{totalDays} </p>
+                    <p>Rent Per Day : {room.rentperday}</p>
+                    <p>Total Amount : {totalamount}</p>
+                  </b>
+                </div>
 
-                  <div style={{ textAlign: "right" }}>
-                    <b>
-                      <h1>Amount</h1>
-                      <hr />
-                      <p>Total Days :{totalDays} </p>
-                      <p>Rent Per Day : {room.rentperday}</p>
-                      <p>Total Amount : {totalamount}</p>
-                    </b>
-                  </div>
-
-                  <div style={{ float: "right" }}>
-                    <button className="btn btn-success" onClick={confirmRoom}>Confirm Booking</button>
-                  </div>
+                <div style={{ float: "right" }}>
+                  <StripeCheckout
+                    amount={totalamount * 100}
+                    token={onToken}
+                    currency="INR"
+                    stripeKey="pk_test_51JKPQWSJULHQ0FL7VOkMrOMFh0AHMoCFit29EgNlVRSvFkDxSoIuY771mqGczvd6bdTHU1EkhJpojOflzoIFGmj300Uj4ALqXa">
+                    <button className="btn btn-success">
+                      Confirm Booking
+                    </button>
+                  </StripeCheckout>
                 </div>
               </div>
             </div>
-          ) : (
-            <Error />
-          )}
-        
+          </div>
+        ) : (
+          <Error />
+        )}
       </>
     );
 }
