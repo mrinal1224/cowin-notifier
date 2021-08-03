@@ -26,10 +26,14 @@ function RoomCard({ room , fromDate , toDate}) {
               Room Type : <i>{room.type}</i>
             </p>
           </b>
+
           <div style={{ float: "right" }}>
-            <Link to={`/book/${room._id}/${fromDate}/${toDate}`}>
-              <button className="btn btn-success m-2">Book Now</button>
-            </Link>
+            {fromDate && toDate && (
+              <Link to={`/book/${room._id}/${fromDate}/${toDate}`}>
+                <button className="btn btn-success m-2">Book Now</button>
+              </Link>
+            )}
+
             <button className="btn btn-outline-dark" onClick={handleShow}>
               View Details
             </button>

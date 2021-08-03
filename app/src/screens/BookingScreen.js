@@ -28,10 +28,10 @@ function BookingScreen({match}) {
        try {
          setLoading(true);
         const roomData = (await axios.post('/api/rooms/getroombyid' , {roomid: match.params.roomid})).data;
-        const totalAmount = totalDays * roomData.rentperday;
        
+         setTotalamount(totalDays * roomData.rentperday);
          setRoom(roomData);
-         setTotalamount(totalAmount)
+         
         
       
          setLoading(false);
@@ -45,7 +45,7 @@ function BookingScreen({match}) {
      const confirmRoom = async()=>{
           const bookingDetails={
             room ,
-            userid : JSON.parse(localStorage.getItem('currentUser'))._id,
+            userid : user.id,
             fromDate,
             toDate,
             totalDays,

@@ -16,18 +16,53 @@ function HomeScreen() {
  const [error , setError] = useState(false)
  const [fromDate , setFromDate]= useState()
  const [toDate , setToDate] = useState()
+ const [duplicateRooms , setDuplicateRooms] = useState([])
 
 
- const filterByDate=(dates)=>{
-   setFromDate(moment(dates[0]).format('DD-MM-YYYY'))
-   setToDate(moment(dates[1]).format("DD-MM-YYYY"));
- }
+function filterByDate(dates) {
+  setFromDate(moment(dates[0]).format("DD-MM-YYYY"));
+  setToDate(moment(dates[1]).format("DD-MM-YYYY"));
+
+  var temp = [];
+  for (var room of duplicateRooms) {
+    var availability = false;
+
+    for (var booking of room.currentbookings) {
+      if (room.currentbookings.length>0) {
+        if (
+          !moment(moment(dates[0]).format("DD-MM-YYYY")).isBetween(
+            booking.fromDate,
+            booking.toDate
+          ) &&
+          !moment(moment(dates[1]).format("DD-MM-YYYY")).isBetween(
+            booking.fromDate,
+            booking.toDate
+          )
+        ) {
+          if (
+            moment(dates[0]).format("DD-MM-YYYY") !== booking.fromDate &&
+            moment(dates[0]).format("DD-MM-YYYY") !== booking.toDate &&
+            moment(dates[1]).format("DD-MM-YYYY") !== booking.fromDate &&
+            moment(dates[1]).format("DD-MM-YYYY") !== booking.toDate
+          ) {
+            availability = true;
+          }
+        }
+      }
+    }
+    if (availability || room.currentbookings.length == 0) {
+      temp.push(room);
+    }
+    setRooms(temp);
+  }
+}
 
  useEffect(async()=>{
      try {
          setLoading(true)
          const roomData = (await axios.get('/api/rooms/getallrooms')).data
          setRooms(roomData)
+         setDuplicateRooms(roomData)
          setLoading(false)
 
      } catch (error) {
