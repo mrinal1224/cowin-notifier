@@ -47,12 +47,12 @@ function Navbar() {
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="/bookings">
                           Your Bookings
                         </a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="#" onClick={logOut}>
+                        <a class="dropdown-item" href="/login" onClick={logOut}>
                           Log Out
                         </a>
                       </li>
