@@ -168,3 +168,17 @@ h1{
   color: white;
   padding-bottom: 20px;
 }
+
+input ,select , .ant-picker {
+  box-shadow: none !important;
+  margin-top: 2px!important;
+  border: 2px solid black !important;
+  width: 100% !important;
+  border-radius: 10px !important;
+  height:35px !important;
+
+}
+
+.ant-picker-input input{
+  border:none !important;
+}

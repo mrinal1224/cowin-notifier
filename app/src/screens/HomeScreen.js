@@ -17,6 +17,8 @@ function HomeScreen() {
  const [fromDate , setFromDate]= useState()
  const [toDate , setToDate] = useState()
  const [duplicateRooms , setDuplicateRooms] = useState([])
+ const [searchKey , setSearchKey] = useState('')
+ const [type , setType] = useState('all')
 
 
 function filterByDate(dates) {
@@ -72,29 +74,69 @@ function filterByDate(dates) {
      }
  },[])
 
+    const filterBySearch =()=>{
+      const filteredRooms = duplicateRooms.filter(room=>room.name.toLowerCase().includes(searchKey.toLowerCase()))
+      
+      setRooms(filteredRooms)
+    }
+
+    const filterByType =(e)=>{
+       setType(e);
+      if(e!=='all'){
+         const roomType = duplicateRooms.filter(
+           (room) => room.type.toLowerCase() == e.toLowerCase()
+         );
+        
+         setRooms(roomType);
+      }
+      else{
+        setRooms(duplicateRooms)
+      }
+      
+    }
+
 
     return (
       <>
-        <div className='container'>
-          <div className='row mt-5'>
-               <div className='col-md-3'>
-                <RangePicker format='DD-MM-YYYY' onChange={filterByDate} />
-               </div>
+        <div className="container">
+          <div className="row mt-5 bs">
+            <div className="col-md-3">
+              <RangePicker format="DD-MM-YYYY" onChange={filterByDate} />
+            </div>
+
+            <div className="col-md-6">
+              <input
+                type="text"
+                placeholder="Search Rooms"
+                className="form-control "
+                value={searchKey}
+                onChange={(e)=> {setSearchKey(e.target.value)}}
+                onKeyUp={filterBySearch}
+              />
+            </div>
+
+            <div className="col-md-2">
+              <select className='form-control'value={type} onChange={(e)=>{filterByType(e.target.value)}}>
+                <option value="all">All</option>
+                <option value="delux">Delux</option>
+                <option value="non-delux">Non-Delux</option>
+              </select>
+            </div>
           </div>
-          
+
           <div className="row justify-content-center mt-5">
             {loading ? (
-              <h1><Loader /></h1>
-            ) : rooms.length>1 ? (
-             rooms.map((room) => {
+              <h1>
+                <Loader />
+              </h1>
+            ) :(
+              rooms.map((room) => {
                 return (
                   <div className="col-md-9 mt-2">
                     <RoomCard room={room} fromDate={fromDate} toDate={toDate} />
                   </div>
                 );
               })
-            ) : (
-              <Error />
             )}
           </div>
         </div>
