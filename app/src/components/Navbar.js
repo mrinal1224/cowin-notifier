@@ -13,7 +13,7 @@ function Navbar() {
       <div>
         <nav className="navbar navbar-expand-sm">
           <nav className="navbar-brand">
-            Quick Rooms
+            <a href="/home" style={{color:'white' , marginLeft:'10px'}}>Quick Rooms</a>
           </nav>
           <button
             className="navbar-toggler"
@@ -25,7 +25,7 @@ function Navbar() {
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon">
-              <i class="fas fa-bars" style={{color:'white'}}></i>
+              <i class="fas fa-bars" style={{ color: "white" }}></i>
             </span>
           </button>
           <div class="collapse navbar-collapse mr-5" id="navbarNav">
@@ -61,7 +61,6 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                  
                   <li class="nav-item active">
                     <a class="nav-link" href="/register">
                       Register
