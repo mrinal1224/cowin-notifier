@@ -36,8 +36,7 @@ function LoginScreen() {
           <div className="loginContainer">
             {error && <Error message="Invalid Credentials" />}
             <h1 className="heading">
-              <i class="fas fa-hotel" aria-hidden="true"></i> Login to Quick
-              Rooms <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <i class="fas fa-hotel" aria-hidden="true"></i> Login to Cowin Notifier <i class="fa fa-map-marker" aria-hidden="true"></i>
             </h1>
 
             <label>

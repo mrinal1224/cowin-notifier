@@ -13,7 +13,7 @@ function Navbar() {
       <div>
         <nav className="navbar navbar-expand-sm">
           <nav className="navbar-brand">
-            <a href="/home" style={{color:'white' , marginLeft:'10px'}}>Quick Rooms</a>
+            <text style={{color:'white' , marginLeft:'10px'}}>Cowin vaccination Slot Notifier</text>
           </nav>
           <button
             className="navbar-toggler"

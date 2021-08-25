@@ -55,8 +55,7 @@ function RegisterScreen() {
           <div className="loginContainer">
             {success && <Success message="Registration Successfull! Welcome to Quick Rooms🙏" />}
             <h1 className="heading">
-              <i class="fas fa-hotel" aria-hidden="true"></i> Register with
-              Quick Rooms <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <i class="fas fa-hotel" aria-hidden="true"></i> Register with cowin notifier <i class="fa fa-map-marker" aria-hidden="true"></i>
             </h1>
             <label>
               <i class="fas fa-user" aria-hidden="false"></i> Name
