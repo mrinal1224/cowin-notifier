@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-
-
-
 import { Tabs } from "antd";
-
 
 const { TabPane } = Tabs;
 const user = JSON.parse(localStorage.getItem("currentUser"));
+console.log(user)
 
 const UserProfile = () => {
 const user = JSON.parse(localStorage.getItem("currentUser"));
+
   useEffect(() => {
     if (!user) {
       window.location.href = "/login";
@@ -28,13 +26,13 @@ const user = JSON.parse(localStorage.getItem("currentUser"));
 
                 <h1>Name : {user.name}</h1>
                 <h1>Email : {user.email}</h1>
-                <h1>Admin : {user.isAdmin ? "Yes" : "No"}</h1>
-                
+                <h1>Age: {user.age}</h1>
+                <h1>Lat: {user.latitude}</h1>
+                <h1>Long: {user.longitude}</h1>
               </div>
             </div>
           </div>
         </TabPane>
-       
       </Tabs>
     </div>
   );

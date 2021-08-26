@@ -1,17 +1,32 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState} from 'react'
 import axios from 'axios'
 import Success from '../components/Success'
 import Loader from '../components/Loader'
 import Error from '../components/Error'
+import geolocation from "geolocation";
+
 
 function RegisterScreen() {
       const [name, setName] = useState('');
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
       const [cpassword, setCpassword] = useState('');
+      const [age , setAge] = useState()
       const [loading, setLoading] = useState(false);
+      const [latitude, setLatitude] = useState(0);
+      const [longitude, setLongitude] = useState(0);
+      const [pincode , setPincode] = useState(0)
       const[success , setSuccess] = useState()
       const [error, setError] = useState();
+
+      geolocation.getCurrentPosition(function (err, position) {
+        if (err) throw err;
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      });
+
+   
+
       
 
       const regiterUser= async()=>{
@@ -19,8 +34,11 @@ function RegisterScreen() {
            const user = {
              name,
              email,
+             age,
              password,
              cpassword,
+             latitude,
+             longitude
            };
            try {
              setLoading(true)
@@ -29,6 +47,7 @@ function RegisterScreen() {
              setSuccess(true)
              setName('')
              setEmail('')
+             setAge()
              setPassword('')
              setCpassword('')
            } catch (error) {
@@ -53,9 +72,12 @@ function RegisterScreen() {
 
         <div className="login">
           <div className="loginContainer">
-            {success && <Success message="Registration Successfull! Welcome to Quick Rooms🙏" />}
+            {success && (
+              <Success message="Registration Successfull! Welcome to Quick Rooms🙏" />
+            )}
             <h1 className="heading">
-              <i class="fas fa-hotel" aria-hidden="true"></i> Register with cowin notifier <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <i class="fas fa-hotel" aria-hidden="true"></i> Register with
+              cowin notifier <i class="fa fa-map-marker" aria-hidden="true"></i>
             </h1>
             <label>
               <i class="fas fa-user" aria-hidden="false"></i> Name
@@ -80,6 +102,19 @@ function RegisterScreen() {
                 setEmail(e.target.value);
               }}
             />
+
+            <label>
+              <i class="fa fa-envelope" aria-hidden="true"></i> Age
+            </label>
+            <input
+              type="text"
+              value = {age}
+              placeholder="Enter Your Age in Number"
+               onChange={(e) => {
+                setAge(e.target.value);
+              }}
+            />
+
             <label>
               <i class="fas fa-key" aria-hidden="true"></i> Password
             </label>

@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const User = require('../models/user')
+let nodeGeocoder = require("node-geocoder");
+
 
 router.post('/register' , async(req , res)=>{
     const newUser = new User(req.body)
@@ -24,9 +26,26 @@ router.post('/login' , async(req , res)=>{
           id: userIn._id,
           name: userIn.name,
           email : userIn.email,
-          isAdmin : userIn.isAdmin
+          age : userIn.age,
+          latitude : userIn.latitude,
+          longitude : userIn.longitude,
+          }
 
-        }
+          let options = {
+            provider: "openstreetmap",
+          };
+
+          let geoCoder = nodeGeocoder(options);
+          // Reverse Geocode
+          geoCoder
+            .reverse({ lat: temp.latitude, lon:temp.longitude})
+            .then((res) => {
+              console.log(res[0].zipcode);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+         
         res.send(temp);
       }
       else{

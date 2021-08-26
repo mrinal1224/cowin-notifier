@@ -17,8 +17,19 @@ const userSchema = mongoose.Schema({
         required:true
     },
 
-    isAdmin:{
-        type:Boolean , default:false
+    age:{
+        type:Number,
+        required : true
+    },
+
+    latitude :{
+        type : Number,
+        required : true
+    },
+
+    longitude : {
+        type : Number,
+        required : true
     }
 },{
     timestamps:true
