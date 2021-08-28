@@ -1,34 +1,75 @@
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
+import os
+import sys
+import requests
 
-PATH = "C:\Program Files (x86)\chromedriver.exe"
+options = webdriver.ChromeOptions()
+options.add_argument("--disable-infobars")
+# options.add_argument("--headless")
+# Uncoment to enable Headless version
+options.add_argument("--start-maximized")
+options.add_argument(
+    "user-agent='User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'"
+)
+def main():
+    pincode = [str(sys.argv[1])]
 
-driver = webdriver.Chrome(PATH)
+    while True:
+        browser = webdriver.Chrome(options=options)
 
-driver.get("https://www.cowin.gov.in/")
+        for pin in pincode:
+            browser.get("https://www.cowin.gov.in/")
+            browser.implicitly_wait(10)
+            browser.find_element_by_id('mat-input-0').send_keys(pin)
+            browser.implicitly_wait(10)
+            time.sleep(10)
+            browser.find_element_by_xpath(
+                "//*[@id=\"mat-tab-content-0-0\"]/div/div[1]/div/div/button").click()
+            time.sleep(10)
+            browser.find_element_by_xpath(
+                "//*[@id=\"Search-Vaccination-Center\"]/appointment-table/div/div/div/div/div/div/div/div/div/div/div[2]/form/div/div/div[2]/div[3]/ul/li[2]/div/div[2]/label").click()
+            time.sleep(10)
 
+            browser.find_element_by_xpath(
+                    "//*[@id=\"Search-Vaccination-Center\"]/appointment-table/div/div/div/div/div/div/div/div/div/div/div[2]/form/div/div/div[5]/div[3]/div/div/div[1]/p")
+                # No slots
+   
 
-searchBar = driver.find_element_by_id('mat-input-0')
-searchBar.send_keys('110001')
-searchBar.send_keys(Keys.RETURN)
-
-
-try:
-    centers= WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located(
-            (By.XPATH, "/html/body/app-root/div/app-home/div[3]/div/appointment-table/div/div/div/div/div/div/div/div/div/div/div[2]/form/div/div/div[4]/div[3]/div[1]/div/div/div/a/div[1]/div[1]"))
+    response = requests.get(
+        
     )
-    print(centers.text)
-except:
-    driver.quit()
+    response.raise_for_status()
+    centers = {}
+    result = response.json()
+    for i in result["centers"]:
+        centers[i["center_id"]] = i
+    count = 0
 
+    flag = False
+    for id, center in centers.items():
+        flag1 = False
+        sessions = center["sessions"]
+        for session in sessions:
+            if session['min_age_limit'] < 45:
+                if flag1 == False:
+                    print(
+                        f"{center['state_name']}, {center['district_name']}, {center['name']}, from: {center['from']}, to: {center['to']}, fee_type: {center['fee_type']}")
+                    flag1 = True
+                flag = True
+                if session['available_capacity'] > 0:
+                    count += 1
+                print(f"{session['date']}, capacity: {session['available_capacity']}, age limit: {session['min_age_limit']}, vaccine: {session['vaccine']}, slots: {session['slots']}")
+                print('````````````````````````````````````````')
+    if flag == False:
+        print("No vaccines available!")
+    else:
+        print(f"{count} sessions available.")
+        
+             
+            
+        print("Vaccine Not Available. Checing Again in 5 mins.")
+        time.sleep(300)
 
-
-
-time.sleep(10)
-
-driver.quit

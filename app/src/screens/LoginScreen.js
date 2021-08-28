@@ -12,7 +12,7 @@ function LoginScreen() {
   const loginUser =async()=>{
     const user={
         email,
-        password
+        password,
     }
     try {
       setLoading(true)
@@ -20,7 +20,7 @@ function LoginScreen() {
       setLoading(false)
 
       localStorage.setItem('currentUser' , JSON.stringify(result))
-      window.location.href='/home'
+      window.location.href='/profile'
     } catch (error) {
       
       console.log(error)

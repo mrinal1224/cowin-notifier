@@ -1,9 +1,11 @@
-import React , {useState} from 'react'
+import React , {useEffect,useState} from 'react'
 import axios from 'axios'
 import Success from '../components/Success'
 import Loader from '../components/Loader'
 import Error from '../components/Error'
+
 import geolocation from "geolocation";
+
 
 
 function RegisterScreen() {
@@ -15,7 +17,6 @@ function RegisterScreen() {
       const [loading, setLoading] = useState(false);
       const [latitude, setLatitude] = useState(0);
       const [longitude, setLongitude] = useState(0);
-      const [pincode , setPincode] = useState(0)
       const[success , setSuccess] = useState()
       const [error, setError] = useState();
 
@@ -27,9 +28,11 @@ function RegisterScreen() {
 
    
 
-      
+     
 
-      const regiterUser= async()=>{
+
+
+        const regiterUser= async()=>{
          if (password === cpassword) {
            const user = {
              name,
@@ -50,6 +53,7 @@ function RegisterScreen() {
              setAge()
              setPassword('')
              setCpassword('')
+             
            } catch (error) {
              console.log(error)
              setLoading(false)
@@ -73,7 +77,7 @@ function RegisterScreen() {
         <div className="login">
           <div className="loginContainer">
             {success && (
-              <Success message="Registration Successfull! Welcome to Quick Rooms🙏" />
+              <Success message="Registration Successfull! Welcome to cowin notifier🙏" />
             )}
             <h1 className="heading">
               <i class="fas fa-hotel" aria-hidden="true"></i> Register with

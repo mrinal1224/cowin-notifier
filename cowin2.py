@@ -4,7 +4,7 @@ import sys
 # Edit below details
 pin_code = str(sys.argv[1])  # Enter your pin code
 # Enter tomorrow's date it'll find next 7 days information. Simply use a later date to find more slots.
-date = "27-08-2021"
+date = "26-08-2021"
 # Optional use https://cdn-api.co-vin.in/api/v2/admin/location/districts/32 and https://cdn-api.co-vin.in/api/v2/admin/location/states
 
 

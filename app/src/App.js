@@ -11,7 +11,6 @@ function App() {
   return (
     <div>
       <Navbar />
-
       <BrowserRouter>
         <Route path="/register" exact component={RegisterScreen} />
         <Route path="/login" exact component={LoginScreen} />
